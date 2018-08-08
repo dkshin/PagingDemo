@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="kr.dkshin.android.pagingdemo.view.main.MainActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="kr.dkshin.android.pagingdemo.view.main.MainViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/backgroundColor">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/clRootView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor"
+            android:clipChildren="false">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/backgroundColor">
+
+                <kr.dkshin.android.pagingdemo.view.ui.viewpager.NoSwipePager
+                    android:id="@+id/mainViewPager"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/backgroundColor"
+                    app:currentItem="@{viewModel.currentPageObservableInt}"
+                    app:layout_constraintBottom_toTopOf="@+id/mainBottomLayout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:onPageChangeListener="@{viewModel.onPageChangeListener}">
+
+                </kr.dkshin.android.pagingdemo.view.ui.viewpager.NoSwipePager>
+
+                <LinearLayout
+                    android:id="@+id/mainBottomLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <com.google.android.material.bottomnavigation.BottomNavigationView
+                        android:id="@+id/mainNavigation"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@color/backgroundColor"
+                        app:itemIconSize="22dp"
+                        app:labelVisibilityMode="labeled"
+                        app:menu="@menu/navigation"
+                        app:onNavigationItemSelected="@{viewModel::onNavigationItemSelected}"
+                        app:setItemIconTint="@{viewModel.colorStateListObservableField}" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </FrameLayout>
+
+
+</layout>

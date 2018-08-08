@@ -1,0 +1,129 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "kr.dkshin.android.pagingdemo"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    lintOptions {
+        abortOnError false
+        disable "MissingTranslation"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        preDexLibraries false
+        javaMaxHeapSize "4g"
+        maxProcessCount Math.max(1, ((int) (Runtime.getRuntime().availableProcessors() / 2)))
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "TEST_URL", "\"https://api.github.com\"")
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "TEST_URL", "\"https://api.github.com\"")
+        }
+    }
+}
+
+dependencies {
+    def androidx_version = "1.0.0-beta01"
+    def lifecycle_version = "2.0.0-beta01"
+    def room_version = "2.0.0-beta01"
+    def paging_version = "2.0.0-beta01"
+    def nav_version = "1.0.0-alpha04"
+    def work_version = "1.0.0-alpha05"
+    def ktx_version = "1.0.0-alpha1"
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //dependencies for local unit tests
+    implementation "androidx.legacy:legacy-support-v4:$androidx_version"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-alpha1'
+    implementation 'com.google.android.material:material:1.0.0-alpha1'
+    testImplementation "junit:junit:4.12"
+    testImplementation "org.mockito:mockito-core:2.18.3"
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:2.16"
+    testImplementation "androidx.room:room-testing:$room_version"
+
+    // UI Testing
+    androidTestImplementation "androidx.test:runner:1.1.0-alpha4"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.0-alpha4"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:3.1.0-alpha4"
+    androidTestImplementation "org.mockito:mockito-core:2.18.3"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:2.16"
+
+    //Multidex minSdkVersion < API 21
+//    implementation "androidx.multidex:multidex:2.0.0"
+
+    //AndroidX, JetPack
+    implementation "androidx.appcompat:appcompat:$androidx_version"
+    implementation "androidx.recyclerview:recyclerview:$androidx_version"
+    implementation "androidx.constraintlayout:constraintlayout:1.1.2"
+    implementation "androidx.cardview:cardview:$androidx_version"
+    implementation "com.google.android.material:material:$androidx_version"
+
+    //LifeCycle
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime:$lifecycle_version"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    //Room
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+
+    //Paging
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-rxjava2:$paging_version"
+
+    //reactive
+    implementation "io.reactivex.rxjava2:rxjava:2.1.14"
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
+    implementation "com.hwangjr.rxbus:rxbus:1.0.6"
+
+    //dependency injection
+    implementation "com.google.dagger:dagger:2.16"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.16"
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.16"
+    implementation "com.google.dagger:dagger-android-support:2.16"
+
+    //network
+    implementation "com.amitshekhar.android:rx2-android-networking:1.0.1"
+
+    //parser
+    implementation "com.google.code.gson:gson:2.8.5"
+
+    //logger
+    implementation "com.orhanobut:logger:2.2.0"
+
+    implementation "com.facebook.fresco:fresco:1.9.0"
+}
